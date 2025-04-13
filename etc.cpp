@@ -238,14 +238,14 @@ namespace etc
 			for (int nb = 0; nb < input.n(); nb++) 
 			{
 				// std::cout << "N " << nb << std::endl;
-				for (int ht = 0; ht < resH; ht++) 
+				for (int c = 0; c < input.c(); c++) 
 				{
-					for (int wd = 0; wd < resW; wd++) 
+					for (int ht = 0; ht < resH; ht++) 
 					{
-						 float sum = 0;
-						
-						 for (int c = 0; c < input.c(); c++) 
-						 {
+						for (int wd = 0; wd < resW; wd++) 
+						{
+							float sum = 0;
+
 							for (int ky = 0; ky < rhs.h(); ky++) 
 							{
 								for (int kx = 0; kx < rhs.w(); kx++)									
@@ -255,9 +255,9 @@ namespace etc
 									//std::cout << ">>SUM: " << sum << std::endl;
 								}
 							}
+							std::cout << ht << wd << "SUM: " << sum << std::endl;
+							result(nb, c, ht, wd) = sum;
 						}
-						std::cout << ht << wd << "SUM: " << sum << std::endl;
-						result(nb, 0, ht, wd) = sum;
 					}
 				}
 			}
@@ -389,7 +389,7 @@ namespace etc
 	void dump(const std::shared_ptr<INode>& node, int level = 0) 
 	{
 		for (int i = 0; i < level; ++i) 
-			std::cout << "  ";
+			std::cout << "    ";
 		
 		if (dynamic_cast<InputData*>(node.get())) 
 		{
